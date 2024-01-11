@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 env.hosts = ["34.229.70.28", "54.89.45.26"]
-env.warn_only = False
+env.warn_only = True
 
 @task
 def do_pack():
