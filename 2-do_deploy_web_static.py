@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 env.hosts = ["34.229.70.28", "54.89.45.26"]
-env.exit_on_error = False
+#env.exit_on_error = False
 
 
 def do_pack():
@@ -29,15 +29,41 @@ def do_deploy(archive_path):
     if not file_path.exists():
         return False
     #Put the file to the archive path.
-    put(file_path, "/tmp")
-    sudo(f"mkdir -p /data/web_static/releases/{file_stem}")
-    sudo(f"tar -xzf /tmp/{file_stem}.tgz -C /data/web_static/releases/{file_stem}")
-    sudo(
+    result = put(file_path, "/tmp")
+    if result.failed:
+        return(False)
+
+
+    result = sudo(f"mkdir -p /data/web_static/releases/{file_stem}")
+    if result.failed:
+        return(False)
+
+    result = sudo(f"tar -xzf /tmp/{file_stem}.tgz -C /data/web_static/releases/{file_stem}")
+    if result.faile:
+        return(False)
+
+    result = sudo(
         f"cp -rf /data/web_static/releases/{file_stem}/web_static/*\
         /data/web_static/releases/{file_stem}"
         )
-    sudo(f"rm -rf /data/web_static/releases/{file_stem}/web_static")
-    sudo(f"rm -f /tmp/{file_stem}.tgz")
-    sudo(f"rm -rf /data/web_static/current")
-    sudo(f"ln -s /data/web_static/releases/{file_stem} /data/web_static/current")
+    if result.failed:
+        return(False)
+
+    result = sudo(f"rm -rf /data/web_static/releases/{file_stem}/web_static")
+    if result.failed:
+        return(False)
+
+    result = sudo(f"rm -f /tmp/{file_stem}.tgz")
+    if result.failed:
+        return(False)
+
+
+    result = sudo(f"rm -rf /data/web_static/current")
+    if result.failed:
+        return(False)
+
+    result = sudo(f"ln -s /data/web_static/releases/{file_stem} /data/web_static/current")
+    if result.failed:
+        return(False)
     print("New version deployed!")
+    return(True)
