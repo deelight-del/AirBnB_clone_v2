@@ -6,9 +6,9 @@ from datetime import datetime
 from pathlib import Path
 
 env.hosts = ["34.229.70.28", "54.89.45.26"]
-#env.exit_on_error = False
+env.warn_only = False
 
-
+@task
 def do_pack():
     """Fab defined functions"""
     # Make versions folder for archives
@@ -21,7 +21,7 @@ def do_pack():
     else:
         return (0)
 
-
+@task
 def do_deploy(archive_path):
     """Function to deploy the static files respectively"""
     file_path = Path(archive_path)
@@ -39,7 +39,7 @@ def do_deploy(archive_path):
         return(False)
 
     result = sudo(f"tar -xzf /tmp/{file_stem}.tgz -C /data/web_static/releases/{file_stem}")
-    if result.faile:
+    if result.failed:
         return(False)
 
     result = sudo(
