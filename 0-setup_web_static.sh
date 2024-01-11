@@ -26,11 +26,11 @@ sudo chown -R ubuntu:ubuntu '/data'
 OLD_HTTP="http {"
 NEW_HTTP="http {\n\tserver {\n\t\tlocation \/hbnb_static {\n\t\t\talias \/data\/web_static\/current\/;\n\t\t\t}\n\t}"
 
-#sudo sed -i "s/$OLD_HTTP/$NEW_HTTP/" /etc/nginx/nginx.conf
+#Replace the old http with new server header
 sudo sed -i "s/$OLD_HTTP/$NEW_HTTP/" /etc/nginx/nginx.conf
 
 #Replace sites-available if present
 sudo sed -i 's/include \/etc\/nginx\/sites-enabled\*/#include \/etc\/nginx\/sites-enabled/' /etc/nginx/nginx.conf
 
 #Restart nginx command
-sudo service nginx restart
+nginx -s reload
