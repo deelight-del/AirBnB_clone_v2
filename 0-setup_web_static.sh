@@ -14,7 +14,8 @@ sudo mkdir -p '/data/web_static/shared/'
 
 
 #Create Fake html file for testing
-printf "Hello Web Static\n" | sudo tee '/data/web_static/releases/test/index.html' > /dev/null
+#printf "Hello Web Static\n" | sudo tee '/data/web_static/releases/test/index.html' > /dev/null
+printf "<html>\n\t<head>\n\t</head>\n\t\t<body>\n\t\t\tHolberton School\n\t\t</body>\n</html>\n" | sudo tee '/data/web_static/releases/test/index.html' > /dev/null
 
 #Create a symbolic link to a the test folder
 sudo ln -sf '/data/web_static/releases/test/' '/data/web_static/current'
