@@ -15,8 +15,9 @@ def do_pack():
     local("mkdir -p versions")
     archive_suffix = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_name = f"versions/web_static_{archive_suffix}.tgz"
-    value = local(f"tar -czvf {archive_name} web_static")
-    if (value == 0):
+    value = local(f"tar -czvf {archive_name} web_static", capture=True)
+    print(value)
+    if value:
         return(archive_name)
     else:
         return (None)
