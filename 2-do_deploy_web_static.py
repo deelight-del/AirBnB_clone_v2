@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 env.hosts = ["34.229.70.28", "54.89.45.26"]
-#env.exit_on_error = False
+env.exit_on_error = False
 
 
 def do_pack():
@@ -31,39 +31,25 @@ def do_deploy(archive_path):
         archive_stem = archive_stem.stem
         put(archive_path, '/tmp/')
         # Make Folder for where to copy to
-        result = sudo(f"mkdir -p /data/web_static/releases/{archive_stem}")
-        if result.failed:
-            return False
-        result = sudo(
+        sudo(f"mkdir -p /data/web_static/releases/{archive_stem}")
+        sudo(
             f"tar -xzf /tmp/{archive_stem}.tgz\
             -C /data/web_static/releases/{archive_stem}"
             )
-        if result.failed:
-            return False
-        result = sudo(f"rm /tmp/{archive_stem}.tgz")
-        if result.failed:
-            return False
-        result = sudo(
+        sudo(f"rm /tmp/{archive_stem}.tgz")
+        sudo(
             f"mv -f /data/web_static/releases/{archive_stem}/web_static/*\
             /data/web_static/releases/{archive_stem}/web_static/*/*\
             /data/web_static/releases/{archive_stem}"
             )
-        if result.failed:
-            return False
         result = sudo(
             f"rm -rf /data/web_static/releases/{archive_stem}/web_static"
             )
-        if result.failed:
-            return False
-        result = sudo("rm -rf /data/web_static/current")
-        if result.failed:
-            return False
-        result = sudo(
+        sudo("rm -rf /data/web_static/current")
+        sudo(
             f"ln -s /data/web_static/releases/{archive_stem}\
             /data/web_static/current"
             )
-        if result.failed:
-            return False
         return (True)
-    except (FileNotFoundError):
+    except (FileNotFoundError, SystemExit):
         return False
