@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 env.hosts = ["34.229.70.28", "54.89.45.26"]
-env.exit_on_error = False
+#env.exit_on_error = False
 
 
 def do_pack():
