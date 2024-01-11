@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#Bash script to set up my web server
 
 #Install nginx only if not installed
 if ! dpkg -s nginx > /dev/null; then
