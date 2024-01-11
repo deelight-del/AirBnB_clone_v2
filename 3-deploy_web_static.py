@@ -52,6 +52,7 @@ def do_deploy(archive_path):
 
 
 def deploy():
+    """Fucntion to finally deploy our easter esgg"""
     archive_path = do_pack()
     if archive_path is None:
         return(False)
