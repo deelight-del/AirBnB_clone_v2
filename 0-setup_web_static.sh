@@ -34,4 +34,4 @@ sudo sed -i "s/$OLD_HTTP/$NEW_HTTP/" /etc/nginx/nginx.conf
 sudo sed -i 's/include \/etc\/nginx\/sites-enabled\*/#include \/etc\/nginx\/sites-enabled/' /etc/nginx/nginx.conf
 
 #Restart nginx command
-sudo nginx -s reload
+sudo service nginx restart
