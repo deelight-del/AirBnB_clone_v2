@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 env.hosts = ["34.229.70.28", "54.89.45.26"]
-#env.exit_on_error = False
+env.exit_on_error = False
 
 
 def do_pack():
@@ -24,32 +24,20 @@ def do_pack():
 
 def do_deploy(archive_path):
     """Function to deploy the static files respectively"""
-    try:
-        with open(archive_path, "rb") as f:
-            pass
-        archive_stem = Path(archive_path)
-        archive_stem = archive_stem.stem
-        put(archive_path, '/tmp/')
-        # Make Folder for where to copy to
-        sudo(f"mkdir -p /data/web_static/releases/{archive_stem}")
-        sudo(
-            f"tar -xzf /tmp/{archive_stem}.tgz\
-            -C /data/web_static/releases/{archive_stem}"
-            )
-        sudo(f"rm /tmp/{archive_stem}.tgz")
-        sudo(
-            f"mv -f /data/web_static/releases/{archive_stem}/web_static/*\
-            /data/web_static/releases/{archive_stem}/web_static/*/*\
-            /data/web_static/releases/{archive_stem}"
-            )
-        result = sudo(
-            f"rm -rf /data/web_static/releases/{archive_stem}/web_static"
-            )
-        sudo("rm -rf /data/web_static/current")
-        sudo(
-            f"ln -s /data/web_static/releases/{archive_stem}\
-            /data/web_static/current"
-            )
-        return (True)
-    except (FileNotFoundError, SystemExit):
+    file_path = Path(archive_path)
+    file_stem = file_path.stem
+    if not file_path.exists():
         return False
+    #Put the file to the archive path.
+    put(file_path, "/tmp")
+    sudo(f"mkdir -p /data/web_static/releases/{file_stem}")
+    sudo(f"tar -xzf /tmp/{file_stem}.tgz -C /data/web_static/releases/{file_stem}")
+    sudo(
+        f"cp -rf /data/web_static/releases/{file_stem}/web_static/*\
+        /data/web_static/releases/{file_stem}"
+        )
+    sudo(f"rm -rf /data/web_static/releases/{file_stem}/web_static")
+    sudo(f"rm -f /tmp/{file_stem}.tgz")
+    sudo(f"rm -rf /data/web_static/current")
+    sudo(f"ln -s /data/web_static/releases/{file_stem} /data/web_static/current")
+    print("New version deployed!")
