@@ -9,6 +9,7 @@ fi
 
 #Create a directory with parents as needed
 sudo mkdir -p '/data/web_static/releases/test/'
+sudo mkdir -p '/data/web_static/shared/'
 
 
 #Create Fake html file for testing
@@ -28,7 +29,7 @@ NEW_HTTP="http {\n\tserver {\n\t\tlocation \/hbnb_static {\n\t\t\talias \/data\/
 sudo sed -i "s/$OLD_HTTP/$NEW_HTTP/" /etc/nginx/nginx.conf
 
 #Replace sites-available if present
-sudo sed -i 's/include \/etc\/nginx\/sites-enabled\//#include \/etc\/nginx\/sites-enabled/' /etc/nginx/nginx.conf
+sudo sed -i 's/include \/etc\/nginx\/sites-enabled\*/#include \/etc\/nginx\/sites-enabled/' /etc/nginx/nginx.conf
 
 #Restart nginx command
 sudo service nginx restart
