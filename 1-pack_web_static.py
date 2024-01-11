@@ -4,9 +4,10 @@ files"""
 from fabric.api import local
 from datetime import datetime
 
+
 def do_pack():
     """Fab defined functions"""
-    #Make versions folder for archives
+    # Make versions folder for archives
     local("mkdir -p versions")
     archive_suffix = datetime.now().strftime("%Y%m%d%H%M%S")
     archive_name = f"versions/web_static_{archive_suffix}.tgz"
