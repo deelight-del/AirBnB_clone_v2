@@ -5,11 +5,10 @@ from fabric.api import *
 from datetime import datetime
 from pathlib import Path
 
-env.hosts = ["34.229.70.28", "54.89.45.26"]
+env.hosts = ["34.229.70.28", "54.89.45.26", "localhost"]
 env.warn_only = True
 
 
-@task
 def do_pack():
     """Fab defined functions"""
     # Make versions folder for archives
@@ -23,7 +22,6 @@ def do_pack():
         return (0)
 
 
-@task
 def do_deploy(archive_path):
     """Function to deploy the static files respectively"""
     file_path = Path(archive_path)
