@@ -17,7 +17,7 @@ class DBStorage:
     """This class manages storage of hbnb models in a DataBase"""
     __engine = None
     __session = None
-    #__accepted_models = {}
+    # __accepted_models = {}
 
     def __init__(self):
         """The database is initialized and the sesssion is set"""
@@ -52,7 +52,7 @@ class DBStorage:
         return {
             "{}.{}".format(model.__class__.__name__, model.id): model
             for model in self.__session.query(
-                self.__accepted_models[cls.__name__], # used .__name__
+                self.__accepted_models[cls.__name__],  # used .__name__
             ).all()
         }
 
