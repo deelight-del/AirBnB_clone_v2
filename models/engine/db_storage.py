@@ -17,7 +17,7 @@ class DBStorage:
     """This class manages storage of hbnb models in a DataBase"""
     __engine = None
     __session = None
-    __accepted_models = {}
+    #__accepted_models = {}
 
     def __init__(self):
         """The database is initialized and the sesssion is set"""
@@ -52,7 +52,7 @@ class DBStorage:
         return {
             "{}.{}".format(model.__class__.__name__, model.id): model
             for model in self.__session.query(
-                self.__accepted_models[cls],
+                self.__accepted_models[cls], # used .__name__
             ).all()
         }
 
@@ -90,3 +90,7 @@ class DBStorage:
             "Review": review.Review,
         }
         self.__session = scoped_session(session_factory)()
+
+    def close(self):
+        """Removing exsting session"""
+        self.__session.remove()
