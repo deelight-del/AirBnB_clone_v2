@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ This module contains the simple implementation of a
 simple flask program"""
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 # app.url_map.strict_slashes = False
@@ -43,6 +43,12 @@ def display_number(n):
     """Function to display numbers that are int"""
     # if isinstance(n, int):
     return f"{n} is a number"
+
+
+@app.route("/number_template/<int:n>", strict_slashes=False)
+def number_template(n):
+    """Functon to map number_template URL to """
+    return render_template("5-number.html", n=n)
 
 
 if __name__ == "__main__":
