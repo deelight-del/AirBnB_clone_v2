@@ -20,12 +20,12 @@ def tear_down_app(exception=None):
 def states(id=None):
     """ Define routing html page to cities by state"""
     states = storage.all(State)
-    state = None # If a given state is not found.
+    state = None  # If a given state is not found.
     if id:
         for value in states.values():
             if value.id == id:
                 state = value
-                break;
+                break
     return render_template("9-states.html", states=states, id=id, state=state)
 
 
