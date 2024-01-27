@@ -15,5 +15,12 @@ def tear_down_app(exception=None):
     storage.close()
 
 
+@app.route("/cities_by_states")
+def cities_by_state():
+    """ Define routing html page to cities by state"""
+    states = storage.all(State)
+    return render_template("8-cities_by_states.html", states=states)
+
+
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port='5000')
